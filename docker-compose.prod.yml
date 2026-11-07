@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api:
+    image: 754724220380.dkr.ecr.ap-southeast-2.amazonaws.com/watchme-api-behavior-features:latest
+    container_name: sed-api
+    ports:
+      - "8004:8004"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - AWS_REGION=${AWS_REGION}
+      - PYTHONUNBUFFERED=1
+    restart: always
+    networks:
+      - watchme-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  watchme-network:
+    external: true

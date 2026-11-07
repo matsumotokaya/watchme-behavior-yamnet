@@ -66,3 +66,7 @@ data/
 *.wav
 *.mp3
 *.m4a
+
+# Archive files
+*.tar.gz
+*.zip
